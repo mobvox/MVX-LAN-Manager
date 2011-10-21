@@ -51,6 +51,9 @@
 	 *	class description: Handle the database, (update, select, insert and etc)
 	*/
 	class DBManager {
+
+
+		// TODO: REESTRUTURAR BANCO DE DADOS
 		
 		private $conn = null;
 
@@ -168,7 +171,7 @@
 					$mac = shell_exec($arpingCommand);
 					preg_match($macRegEx, $mac, $matches);
 
-					if($matches[0]){
+					if(isset($matches[0])){
 						return $matches[0];
 					}
 
@@ -187,7 +190,7 @@
 			$ips = shell_exec($shellCommand);
 			preg_match_all($ipRegEx, $ips, $matches);
 
-			if($matches[0][0]){
+			if(isset($matches[0][0])){
 				return $matches[0];
 			}
 			return null;
@@ -210,7 +213,7 @@
 				$mac = shell_exec($arpingCommand);
 				preg_match($macRegEx, $mac, $matches);
 
-				if($matches[0]){
+				if(isset($matches[0])){
 					$macAddressList[$ip] = $matches[0];
 				}
 			}

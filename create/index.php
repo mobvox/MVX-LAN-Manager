@@ -16,7 +16,7 @@
 					}else{
 						$("form fieldset input#ip").css("border", "2px solid #666666");
 					}
-					$.get("/computers/find/mac", {ip : $("form fieldset input#ip").val()} , function(data){
+					$.get("../find/mac", {ip : $("form fieldset input#ip").val()} , function(data){
 						if(data == "invalid address"){
 							$("form fieldset input#ip").css("border", "2px solid red");
 						}else if(data == ""){
@@ -109,7 +109,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		<form id="create_form" method="post" action="">
 			<fieldset><legend>new computer</legend>
 				
-				<span>IP Address:</span><?php if(isset($error)){echo $error["ip"];} ?><br />
+				<span>IP Address:</span><?php if(isset($error)){echo $error["ip"];} ?><a href="#" class="list">show-me an updated list</a><br />
 					<input type="text" name="ip" id="ip" /><br />
 				<span>MAC Address:</span><?php if(isset($error)){echo $error["mac"];} ?> <a href="#" class="find">find</a><br />
 					<input type="text" name="mac" id="mac" /><br />
