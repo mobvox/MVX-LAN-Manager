@@ -137,6 +137,39 @@
 
 			return $this->conn->query("SELECT * FROM computers WHERE mac='{$macAddress}' AND active=1;");
 		}
+
+		// serialize and base64 encode
+		private function encode($obj){
+			return base64_encode(gzcompress(serialize($obj)));
+		}
+
+		// unserialize and base64 decode
+		private function decode($text){
+			 return unserialize(gzuncompress(base64_decode($text))); 
+		}
+
+		// store the arp cache
+		public function updateCache($cacheArray){
+			if($this->conn == null){
+				$this->conn = new Connection();
+			}
+
+			$encodedObj = $this->encode($cacheArray);
+
+			$this->conn->query("UPDATE arpcache SET data='{$encodedObj}' WHERE id=1;");
+		}
+		
+		// get the cache array
+		public function getCacheArray(){
+			if($this->conn == null){
+				$this->conn = new Connection();
+			}
+
+			$queryResult = $this->conn->query("SELECT timestamp, data FROM arpcache WHERE id=1;");
+
+			return array( "timestamp" => $queryResult["timestamp"], "array" => $this->decode($queryResult["data"]));
+		}
+
 	}
 
 	/*
@@ -147,74 +180,35 @@
 	*/
 	class ServerManager {
 		
-		public function getIPAddrss($mac){
-			// TODO: ARP Cache
-		}
 
-		// get the mac address of an ip address
-		public function getMACAddress($ipAddress){
-
+		public function storeARPCache(){
+			// ip reg. exp.
 			$ipRegEx = "/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/";
+			// mac reg. exp.
 			$macRegEx = "/(([0-9a-f]{2}([:-]|)){6})/";
+			// TODO : config file to store the ip address range
+			$nMapCommand = "nmap -sPn 192.168.1.2-254";
+			$arpCommand = "sudo arp -a ";
 
-			$arpingCommand = "sudo arping {$ipAddress} -c 1 -r";
-			$NMapCommand = "nmap -sPn 192.168.1.2-254";
+			// this can take a while, about 5 sec.
+			$unparsedIPList = shell_exec($nMapCommand);
 
-			$ips = shell_exec($NMapCommand);
-			preg_match_all($ipRegEx, $ips, $matches);
-	
-			foreach($matches[0] as $ip) {
-				if($ipAddress == $ip){
-					$mac = shell_exec($arpingCommand);
-					preg_match($macRegEx, $mac, $matches);
+			preg_match_all($ipRegEx, $unparsedIPList, $ipMatchesArray);
 
-					if(isset($matches[0])){
-						return $matches[0];
-					}
+			$cacheArray = array();
 
-					return null;
+			foreach($ipMatchesArray[0] as $ip){
+				$unparsedMACString = shell_exec($arpCommand. $ip);
+
+				preg_match($macRegEx, $unparsedMACString, $matchedMAC);
+				
+				if(isset($matchedMAC[0])){
+					$cacheArray[$ip] = $matchedMAC[0];
 				}
 			}
-			return null;
-		}
 
-		// get ip addresses's list
-		public function getIPAddressList(){
-
-			$shellCommand = "nmap -sPn 192.168.1.2-254";
-			$ipRegEx = "/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/";
-
-			$ips = shell_exec($shellCommand);
-			preg_match_all($ipRegEx, $ips, $matches);
-
-			if(isset($matches[0][0])){
-				return $matches[0];
-			}
-			return null;
-		}
-
-		/*	
-		 *	get mac addresses's list returns a list containing the mac addresses referenced by the ip addresses
-		 *	this function may take a WHILE because of the number of querys
-		 */
-		public function getMACAddressList($ipAddressList){
-
-			$macRegEx = "/(([0-9a-f]{2}([:-]|)){6})/";
-
-			$macAddressList = Array();
-
-			foreach($ipAddressList as $ip){
-
-				$arpingCommand = "sudo arping {$ip} -c 1 -r";
-
-				$mac = shell_exec($arpingCommand);
-				preg_match($macRegEx, $mac, $matches);
-
-				if(isset($matches[0])){
-					$macAddressList[$ip] = $matches[0];
-				}
-			}
-			return $macAddressList;
+			$db = new DBManager();
+			$db->updateCache($cacheArray);
 		}
 
 		// send a WOL packet to the target

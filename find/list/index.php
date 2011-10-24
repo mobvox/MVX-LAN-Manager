@@ -1,28 +1,19 @@
+<meta charset="utf-8" />
 <?php
 // file: find/list/index.php
 // creation date: 17/10/2011
 // description: find the mac address by ip
 
 include_once("../../includes/classes.php");
-	$server = new ServerManager();
 	$db = new DBManager();
 	
-	$ipList = $server->getIPAddressList();
-	$macList = $server->getMACAddressList($ipList);
+	$arpcache = $db->getCacheArray();
+	
+	echo "<div id='last_update'>Last update: " . $arpcache["timestamp"] . "</div>";
 
+	while ($mac = current($arpcache["array"])) {
+   	 	echo "<div id='table_row' >" . $mac . " → " . key($arpcache["array"]) . "</div>";
 
-	foreach($ipList as $ip){
-		if (isset($macList[$ip])){
-			$dbRegister = $db->getComputerByMAC($macList[$ip]);
-			
-			if(isset($dbRegister[0])){
-				echo "<div>" . $dbRegister . " - " . $ip . " - " . $macList[$ip] . "</div><br />";
-			}else{
-				echo "<div>" . $ip . " - " . $macList[$ip] . "</div><br />";
-			}
-			
-		}
-		
+    	next($arpcache["array"]);
 	}
-
 ?>

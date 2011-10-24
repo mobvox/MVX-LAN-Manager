@@ -15,19 +15,42 @@
 						$("form fieldset input#ip").css("border", "2px solid red");
 					}else{
 						$("form fieldset input#ip").css("border", "2px solid #666666");
-					}
-					$.get("../find/mac", {ip : $("form fieldset input#ip").val()} , function(data){
-						if(data == "invalid address"){
-							$("form fieldset input#ip").css("border", "2px solid red");
-						}else if(data == ""){
-							$("form fieldset input#mac").val("not found");
-						}else{
-							$("form fieldset input#mac").val(data);
-						}
+						$.get("../find/mac", {ip : $("form fieldset input#ip").val()} , function(data){
+							if(data == "invalid address"){
+								$("form fieldset input#ip").css("border", "2px solid red");
+							}else if(data == ""){
+								$("form fieldset input#mac").val("not found");
+							}else{
+								$("form fieldset input#mac").val(data);
+							}
+					});
+					}					
+				});
+
+				$("form fieldset a.list").click(function(){
+					$.get("../find/list" , function(data){
+							$("div#list").html(data);					
+					});
+				})
+
+				$("form fieldset a.find_mac").click(function(){
+					if($("form fieldset input#mac").val() == ""){
+						$("form fieldset input#mac").css("border", "2px solid red");
+					}else{
+						$("form fieldset input#mac").css("border", "2px solid #666666");
+						$.get("../find/ip", {mac : $("form fieldset input#mac").val()} , function(data){
+							if(data == "invalid address"){
+								$("form fieldset input#mac").css("border", "2px solid red");
+							}else if(data == ""){
+								$("form fieldset input#ip").val("not found");
+							}else{
+								$("form fieldset input#ip").val(data);
+							}
 						
 					});
-					
+					}					
 				});
+				
 			});
 		</script>
 	</head>
@@ -40,76 +63,13 @@
 
 include_once("../includes/classes.php");
 
-function isMACValid(){
-	$macRegEx = "/^(([0-9a-f]{2}([:-]|)){6})$/";
-	if(preg_match($macRegEx, $_POST['mac'])){
-		return true;
-	}else{
-		return false;
-	}
-}
-function isIPValid(){
-	$ipRegEx = "/^(\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)$/";
-	if(preg_match($ipRegEx, $_POST['ip'])){
-		return true;
-	}else{
-		return false;
-	}
-}
-
-function verifyFields(){
-	$fieldsArray = array("mac", "ip", "user");
-	$unfilledArray = array();
-
-	foreach ($fieldsArray as $field){
-		if((!isset($_POST[$field])) || ($_POST[$field] == "")){
-			array_push($unfilledArray, $field);
-		}
-	}
-	if(!in_array("mac",$unfilledArray)){
-		if(!isMACValid()){
-			array_push($unfilledArray, "mac");
-		}
-	}
-	if(!in_array("ip",$unfilledArray)){
-		if(!isIPValid()){
-			array_push($unfilledArray, "ip");
-		}
-	}
-	if(count($unfilledArray) > 0){
-		return $unfilledArray;
-	}else{
-		return true;
-	}
-}
-
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$verifyFields = verifyFields();
-	$error = array("mac"=>"", "ip"=>"", "user"=>"", "active"=>"");
-	if(!is_array($verifyFields)){
-		$db = new DBManager();
-		$active = 0;
-		if(isset($_POST["active"])){
-			$active = 1;
-		}
-		$db->insert($_POST["mac"], $_POST["user"], $_POST["comments"], $_POST["ip"], $active);
-
-
-	}else{
-		echo "You must fill out the required fields. ";
-		foreach($verifyFields as $field){
-			$error[$field] = "<span class='error'>*</span>";
-		 	echo $field . " ";
-		}
-	}
-}
 ?>
 
 	<div id="content">
 		<form id="create_form" method="post" action="">
 			<fieldset><legend>new computer</legend>
 				
-				<span>IP Address:</span><?php if(isset($error)){echo $error["ip"];} ?><a href="#" class="list">show-me an updated list</a><br />
+				<span>IP Address:</span><?php if(isset($error)){echo $error["ip"];} ?> <a href="#" class="list">show-me a list</a> <a href="#" class="find_mac">find</a><br />
 					<input type="text" name="ip" id="ip" /><br />
 				<span>MAC Address:</span><?php if(isset($error)){echo $error["mac"];} ?> <a href="#" class="find">find</a><br />
 					<input type="text" name="mac" id="mac" /><br />
@@ -117,13 +77,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 					<input type="text" name="user" id="user" /><br />
 				<span>Comments:</span><br />
 					<textarea id="comments" name="comments"></textarea><br />
-				<span>Activo:</span>
+				<span>Active:</span>
 					<input type="checkbox" name="active" id="active" /><br />
 
 					<input type="submit" name="submit" id="submit" value="send" />
 
 			</fieldset>
 		</form>
+		<div id="list"></div>
 	</div>
 </body>
 

@@ -10,8 +10,14 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 	if(isset($_GET['ip'])){
 		preg_match($ipRegEx, $_GET['ip'], $matches);
 		if(isset($matches[0])){
-			$server = new ServerManager();
-			echo $server->getMACAddress($matches[0]);
+			$db = new DBManager();
+	
+			$arpcache = $db->getCacheArray();
+			if(isset($arpcache["array"][$matches[0]])){
+				echo $arpcache["array"][$matches[0]];
+			}else{
+				echo "not found";
+			}
 		}else{
 			echo "invalid address";
 		}		
