@@ -20,6 +20,8 @@
 		private function getConnection(){
 			$conn = mysql_connect($this->HOST, $this->USERNAME, $this->PASSWD);
 			if (!$conn) {
+
+				// TODO: ERROR PAGE
     			die('Something went wrong when openning MySQL connection.');
 	    	}else{
 	    		mysql_select_db($this->DB); 
@@ -62,7 +64,7 @@
 			if($this->conn == null){
 				$this->conn = new Connection();
 			}
-			$this->conn->query("CALL insertNewComputer('{$macaddress}', '{$user}', '{$comments}', '{$ipaddress}', '{$active}');");
+			$this->conn->query("INSERT INTO computers VALUES('{$macaddress}', '{$ipaddress}', '{$user}', '{$comments}', '{$active}');");
 		}
 
 		// edit a computer
@@ -70,8 +72,7 @@
 			if($this->conn == null){
 				$this->conn = new Connection();
 			}
-			
-			$this->conn->query("CALL editComputer('{$macaddress}', '{$newmacaddress}', '{$newuser}', '{$newcomments}', '{$newipaddress}', '{$active}');");
+			$this->conn->query("UPDATE computers SET mac='{$newmacaddress}', ip='{$newipaddress}', user='{$newuser}', comments='{$newcomments}', active='{$active}'' WHERE mac='{$macaddress}';");
 		}
 
 		// edit a computer ip address
@@ -80,7 +81,7 @@
 				$this->conn = new Connection();
 			}
 			
-			$this->conn->query("CALL editIPAddress('{$macaddress}', '{$newipaddress}');");
+			$this->conn->query("UPDATE computers SET ip='{$newipaddress}' WHERE mac='{$macaddress}'");
 		}
 
 		// disable a computer register
@@ -89,7 +90,7 @@
 				$this->conn = new Connection();
 			}
 
-			$this->conn->query("UPDATE computers SET ativo = 0 WHERE macaddress = '{$macaddress}'");
+			$this->conn->query("UPDATE computers SET active=0 WHERE macaddress='{$macaddress}'");
 		}
 
 		// enable a computer register
@@ -98,7 +99,7 @@
 				$this->conn = new Connection();
 			}
 
-			$this->conn->query("UPDATE computers  SET ativo = 1 WHERE macaddress = '{$macaddress}'");
+			$this->conn->query("UPDATE computers  SET active=1 WHERE macaddress='{$macaddress}'");
 		}
 
 		// get a list of the enabled's computers
@@ -107,9 +108,7 @@
 				$this->conn = new Connection();
 			}
 
-			return $this->conn->query("SELECT computers.*, ipaddresses.ipaddress FROM computers, ipaddresses ".
-										"WHERE computers.macaddress = ipaddresses.macaddress ".
-										"AND computers.ativo = 1;");
+			return $this->conn->query("SELECT * FROM computers WHERE active=1;");
 		}
 
 		// get a list of the disabled's computers
@@ -118,9 +117,7 @@
 				$this->conn = new Connection();
 			}
 
-			return $this->conn->query("SELECT computers.*, ipaddresses.ipaddress FROM computers, ipaddresses ".
-										"WHERE computers.macaddress = ipaddresses.macaddress ".
-										"AND computers.ativo = 0;");
+			return $this->conn->query("SELECT * FROM computers WHERE active=0;");
 		}
 
 		// get computer by IP
@@ -129,9 +126,7 @@
 				$this->conn = new Connection();
 			}
 
-			return $this->conn->query("SELECT computers.*, ipaddresses.ipaddress FROM computers, ipaddresses ".
-										"WHERE computers.macaddress = ipaddresses.macaddress AND ipaddresses.ipaddress = '{$ipAddress}' ".
-										"AND computers.ativo = 1;");
+			return $this->conn->query("SELECT * FROM computers WHERE ip='{$ipAddress}' AND active=1;");
 		}
 
 		// get computer by MAC
@@ -140,9 +135,7 @@
 				$this->conn = new Connection();
 			}
 
-			return $this->conn->query("SELECT computers.*, ipaddresses.ipaddress FROM computers, ipaddresses ".
-										"WHERE computers.macaddress = ipaddresses.macaddress AND computers.macaddress = '{$macAddress}' ".
-										"AND computers.ativo = 1;");
+			return $this->conn->query("SELECT * FROM computers WHERE mac='{$macAddress}' AND active=1;");
 		}
 	}
 
@@ -154,6 +147,10 @@
 	*/
 	class ServerManager {
 		
+		public function getIPAddrss($mac){
+			// TODO: ARP Cache
+		}
+
 		// get the mac address of an ip address
 		public function getMACAddress($ipAddress){
 

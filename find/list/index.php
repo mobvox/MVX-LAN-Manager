@@ -14,8 +14,8 @@ include_once("../../includes/classes.php");
 	foreach($ipList as $ip){
 		if (isset($macList[$ip])){
 			$dbRegister = $db->getComputerByMAC($macList[$ip]);
-
-			if(count($dbRegister) > 0){
+			
+			if(isset($dbRegister[0])){
 				echo "<div>" . $dbRegister . " - " . $ip . " - " . $macList[$ip] . "</div><br />";
 			}else{
 				echo "<div>" . $ip . " - " . $macList[$ip] . "</div><br />";
