@@ -66,10 +66,14 @@
 			if($this->conn == null){
 				$this->conn = new Connection();
 			}
+<<<<<<< HEAD
 			$this->conn->query(sprintf("INSERT INTO computers VALUES('%s', '%s', '%s', '%s', '%s');",
 								mysql_real_escape_string($macaddress), mysql_real_escape_string($ipaddress), mysql_real_escape_string($user),
 								mysql_real_escape_string($comments), mysql_real_escape_string($active)));
 
+=======
+			$this->conn->query("INSERT INTO computers VALUES('{$macaddress}', '{$ipaddress}', '{$user}', '{$comments}', '{$active}');");
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		}
 
 		// edit a computer
@@ -77,9 +81,13 @@
 			if($this->conn == null){
 				$this->conn = new Connection();
 			}
+<<<<<<< HEAD
 			$this->conn->query(sprintf("UPDATE computers SET mac='%s', ip='%s', user='%s', comments='%s', active='%s'' WHERE mac='%s';",
 							mysql_real_escape_string($newmacaddress), mysql_real_escape_string($newipaddress), mysql_real_escape_string($newuser),
 							mysql_real_escape_string($newcomments), mysql_real_escape_string($active), mysql_real_escape_string($macaddress)));
+=======
+			$this->conn->query("UPDATE computers SET mac='{$newmacaddress}', ip='{$newipaddress}', user='{$newuser}', comments='{$newcomments}', active='{$active}'' WHERE mac='{$macaddress}';");
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		}
 
 		// edit a computer ip address
@@ -88,8 +96,12 @@
 				$this->conn = new Connection();
 			}
 			
+<<<<<<< HEAD
 			$this->conn->query(sprintf("UPDATE computers SET ip='%s' WHERE mac='%s'",
 								mysql_real_escape_string($newipaddress), mysql_real_escape_string($macaddress)));
+=======
+			$this->conn->query("UPDATE computers SET ip='{$newipaddress}' WHERE mac='{$macaddress}'");
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		}
 
 		// disable a computer register
@@ -98,8 +110,12 @@
 				$this->conn = new Connection();
 			}
 
+<<<<<<< HEAD
 			$this->conn->query(sprintf("UPDATE computers SET active=0 WHERE macaddress='%s'",
 								mysql_real_escape_string($macaddress)));
+=======
+			$this->conn->query("UPDATE computers SET active=0 WHERE macaddress='{$macaddress}'");
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		}
 
 		// enable a computer register
@@ -108,8 +124,12 @@
 				$this->conn = new Connection();
 			}
 
+<<<<<<< HEAD
 			$this->conn->query(sprintf("UPDATE computers SET active=1 WHERE macaddress='%s'",
 								mysql_real_escape_string($macaddress)));
+=======
+			$this->conn->query("UPDATE computers  SET active=1 WHERE macaddress='{$macaddress}'");
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		}
 
 		// get a list of the enabled's computers
@@ -136,9 +156,13 @@
 				$this->conn = new Connection();
 			}
 
+<<<<<<< HEAD
 			return $this->conn->query(sprintf("SELECT * FROM computers WHERE ip='%s' AND active=1;",
 										mysql_real_escape_string($ipAddress)));
 
+=======
+			return $this->conn->query("SELECT * FROM computers WHERE ip='{$ipAddress}' AND active=1;");
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		}
 
 		// get computer by MAC
@@ -147,6 +171,7 @@
 				$this->conn = new Connection();
 			}
 
+<<<<<<< HEAD
 			return $this->conn->query(sprintf("SELECT * FROM computers WHERE mac='%s' AND active=1;",
 										mysql_real_escape_string($macAddress)));
 		}
@@ -179,10 +204,39 @@
 		}
 		// get the cache array
 		public function getCache(){
+=======
+			return $this->conn->query("SELECT * FROM computers WHERE mac='{$macAddress}' AND active=1;");
+		}
+
+		// serialize and base64 encode
+		private function encode($obj){
+			return base64_encode(gzcompress(serialize($obj)));
+		}
+
+		// unserialize and base64 decode
+		private function decode($text){
+			 return unserialize(gzuncompress(base64_decode($text))); 
+		}
+
+		// store the arp cache
+		public function updateCache($cacheArray){
 			if($this->conn == null){
 				$this->conn = new Connection();
 			}
 
+			$encodedObj = $this->encode($cacheArray);
+
+			$this->conn->query("UPDATE arpcache SET data='{$encodedObj}' WHERE id=1;");
+		}
+		
+		// get the cache array
+		public function getCacheArray(){
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
+			if($this->conn == null){
+				$this->conn = new Connection();
+			}
+
+<<<<<<< HEAD
 			$queryResult = $this->conn->query("SELECT * FROM arpcache;");
 
 			return $queryResult;
@@ -218,13 +272,35 @@
 	class ServerManager {
 		
 
+=======
+			$queryResult = $this->conn->query("SELECT timestamp, data FROM arpcache WHERE id=1;");
+
+			return array( "timestamp" => $queryResult["timestamp"], "array" => $this->decode($queryResult["data"]));
+		}
+
+	}
+
+	/*
+	 *	class name: Server Manager
+	 *	class creator: Jonas Trevisan
+	 *	class date: 10/14/20111
+	 *	class description: Handle the server, (to get Mac addresses, ip's list, mac's list, send wake up packets, send switch off commands and etc.)
+	*/
+	class ServerManager {
+		
+
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		public function storeARPCache(){
 			// ip reg. exp.
 			$ipRegEx = "/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/";
 			// mac reg. exp.
 			$macRegEx = "/(([0-9a-f]{2}([:-]|)){6})/";
 			// TODO : config file to store the ip address range
+<<<<<<< HEAD
 			$nMapCommand = "nmap -sP 192.168.1.2-254";
+=======
+			$nMapCommand = "nmap -sPn 192.168.1.2-254";
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 			$arpCommand = "sudo arp -a ";
 
 			// this can take a while, about 5 sec.

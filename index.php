@@ -1,6 +1,7 @@
 <?php
 	include_once("includes/classes.php");
 ?>
+<<<<<<< HEAD
 <!DOCTYPE html>
 
 <html>
@@ -23,3 +24,5 @@
 	</body>
 </html>
 
+=======
+>>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
