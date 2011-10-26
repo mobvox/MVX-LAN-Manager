@@ -1,22 +1,22 @@
 <?php
-// file: find/mac/index.php
-// creation date: 17/10/2011
-// description: find the mac address by ip
+// file: find/ip/index.php
+// creation date: 24/10/2011
+// description: find the ip address by mac
 
 include_once("../../includes/classes.php");
 
 if($_SERVER['REQUEST_METHOD'] == 'GET'){
-	$ipRegEx = "/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/";
-	if(isset($_GET['ip'])){
-		preg_match($ipRegEx, $_GET['ip'], $matches);
+	$macRegEx = "/(([0-9a-f]{2}([:-]|)){6})/";
+	if(isset($_GET['mac'])){
+		preg_match($macRegEx, $_GET['mac'], $matches);
 		if(isset($matches[0])){
 			$db = new DBManager();
 	
 			$arpcache = $db->getCache();
-
+			
 			while($row = mysql_fetch_assoc($arpcache)){
-				if($row["ip"] == $matches[0]){
-					echo $row["mac"];
+				if($row["mac"] == $matches[0]){
+					echo $row["ip"];
 					mysql_free_result($arpcache);
 					return;
 				}
