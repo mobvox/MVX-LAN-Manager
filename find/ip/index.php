@@ -12,7 +12,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 		if(isset($matches[0])){
 			$db = new DBManager();
 	
-<<<<<<< HEAD
 			$arpcache = $db->getCache();
 			
 			while($row = mysql_fetch_assoc($arpcache)){
@@ -24,19 +23,6 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
 			}
 			echo "Not Found!";
 			mysql_free_result($arpcache);
-=======
-			$arpcache = $db->getCacheArray();
-			
-			while($mac = current($arpcache["array"])){
-				if($mac == $matches[0]){
-					echo key($arpcache["array"]);
-					return;
-				}else{
-					next($arpcache["array"]);
-				}
-			}
-			echo "not found";
->>>>>>> ad2b21e6b06076f2914afad39aa1503df209fe25
 		}else{
 			echo "invalid address";
 		}		
