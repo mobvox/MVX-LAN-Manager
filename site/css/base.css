@@ -30,16 +30,12 @@ div.content div.event_reporting {
 	background-color: #fdfab1;
 	position: absolute;
 	top: 0px;
-	left: 50%;
-	width: 500px;
+	left: 260px;
+	width: 540px;
 	height: 50px;
-	margin-left:-250px;
-	display: block;
-	vertical-align: middle;
 	text-align: center;
 	border: 1px dotted #cccccc;
 	border-top: none;
-	z-index: 2;
 }
 
 div.content div.logo{
@@ -128,4 +124,3 @@ div.content div.computers_list ul li {
 div.content div.computers_list ul li:hover {
 	background: #cccccc;
 }
-

@@ -28,10 +28,18 @@
 				<div class="list_heading">a</div>
 				<ul>
 					<li>
-					a
+						<div class="buttons_toolkit"></div>
+						<div class="sep"></div>
+						<div class="computer_info"></div>
+						<div class="sep"></div>
+						<div class="comments"></div>
 					</li>
 					<li>
-					a
+						<div class="buttons_toolkit"></div>
+						<div class="sep"></div>
+						<div class="computer_info"></div>
+						<div class="sep"></div>
+						<div class="comments"></div>
 					</li>
 				</ul>
 			</div>
