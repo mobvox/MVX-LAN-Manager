@@ -9,16 +9,32 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="site/css/base.css" />
 		<script src="site/js/jquery-1.6.4.min.js" type="text/javascript" ></script>
-
-		<script type="text/javascript">
-			
-		</script>
 	</head>
 	<body>
-		<?php 
-			$db = new DBManager();
-			$server = new ServerManager();
-			
-		?>
+		<div class="content">
+			<div class="event_reporting"><p>The cache needs updating, <a href="#">update now</a>.</p></div>
+			<div class="logo"></div>
+			<div class="left_menu_list">
+				<ul>
+					<li class="list active">
+						<a href="#">Lista</a><span>&nbsp;</span>
+					</li>
+					<li class="new">
+						<a href="#">Novo</a><span>&nbsp;</span>
+					</li>
+				</ul>
+			</div>
+			<div class="computers_list">
+				<div class="list_heading">a</div>
+				<ul>
+					<li>
+					a
+					</li>
+					<li>
+					a
+					</li>
+				</ul>
+			</div>
+		</div>
 	</body>
 </html>

@@ -1,0 +1,131 @@
+body {
+	margin: 0px;
+}
+p {
+	font-family: Verdana;
+	font-size: 12px;
+	color: #333333;
+	font-weight: bold;
+}
+ul { 
+	list-style-type: none;
+}
+
+a {
+	color: #006699;
+}
+
+
+
+div.content {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	z-index: 0;
+	width: 900px;
+}
+
+div.content div.event_reporting {
+	background-color: #fdfab1;
+	position: absolute;
+	top: 0px;
+	left: 50%;
+	width: 500px;
+	height: 50px;
+	margin-left:-250px;
+	display: block;
+	vertical-align: middle;
+	text-align: center;
+	border: 1px dotted #cccccc;
+	border-top: none;
+	z-index: 2;
+}
+
+div.content div.logo{
+	position: relative;
+	left: 10px;
+	top: 10px;
+	width: 196px;
+	height: 136px;
+	background: url("../images/logo.jpg") no-repeat;
+}
+div.content div.left_menu_list {
+	position: relative;
+	width: 196px;
+	float: left;
+}
+
+div.content div.left_menu_list ul {
+	padding-left: 10px;
+}
+
+div.content div.left_menu_list ul li{
+	margin-top: 1px;
+	padding-left: 30px;
+	background: #d6d6d6;
+}
+
+div.content div.left_menu_list ul li:hover{
+	background: #cccccc;
+	cursor: pointer;
+}
+
+div.content div.left_menu_list ul li.active span{
+	background: url("../images/icons.png") no-repeat;
+	background-position:  0px -226px;
+	float: right;
+	width: 30px;
+	line-height: 35px;
+}
+
+div.content div.left_menu_list ul li.active {
+	background: #cccccc;
+}
+
+div.content div.left_menu_list ul li a{
+	font-family: Verdana;
+	font-size: 12px;
+	color: #333333;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 35px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 30px;
+	background: url("../images/icons.png") no-repeat;
+}
+
+div.content div.left_menu_list ul li.list a{
+	background-position:  0px -106px;
+}
+
+div.content div.left_menu_list ul li.new a{
+	background-position:  0px -170px;
+}
+
+div.content div.list_heading {
+	background: #bcbcbc;
+	height: 50px;
+}
+div.content div.computers_list {
+	position: relative;
+	top: 16px;
+	left: 10px;
+	width: 650px;
+	float: left;
+}
+
+div.content div.computers_list ul {
+	margin-top: 0;
+	padding: 0;
+}
+div.content div.computers_list ul li {
+	margin-top: 1px;
+	background: #d6d6d6;
+	height: 130px;
+}
+div.content div.computers_list ul li:hover {
+	background: #cccccc;
+}
+
