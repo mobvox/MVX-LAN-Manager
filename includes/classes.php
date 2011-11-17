@@ -216,6 +216,24 @@
 	*/
 	class ServerManager {
 		public function updateCache(){
+			/*
+
+
+				get all hostnames
+
+				 nbtscan 192.168.1.1-254 | gawk --re-interval '/^(([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3})/{print $1 " " $2 }'
+
+				get mac address
+
+				 arp -a ANY-IP | gawk --re-interval '/([0-9a-fA-F]{2}\:){5}([0-9a-fA-F]{2})/{print $4}'
+
+				get all up ip addresses
+
+			 	 nmap -sPn 192.168.1.1-254 | gawk --re-interval '/(([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3})/{print $5 " " $6 }'
+
+
+			 */
+
 			// ip reg. exp.
 			$ipRegEx = "/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/";
 			// mac reg. exp.
