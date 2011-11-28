@@ -1,0 +1,3 @@
+include lanmanager/config/deployment.ini_tmpl
+recursive-include lanmanager/public *
+recursive-include lanmanager/templates *
