@@ -5,7 +5,7 @@
 #
 [DEFAULT]
 debug = true
-email_to = you@yourdomain.com
+email_to = jonas@mobvox.com.br
 smtp_server = localhost
 error_email_from = paste@localhost
 
@@ -33,7 +33,7 @@ app_instance_uuid = ${app_instance_uuid}
 # WARNING: *THE LINE BELOW MUST BE UNCOMMENTED ON A PRODUCTION ENVIRONMENT*
 # Debug mode will enable the interactive debugging tool, allowing ANYONE to
 # execute malicious code after an exception is raised.
-set debug = false
+#set debug = false
 
 
 # Logging configuration

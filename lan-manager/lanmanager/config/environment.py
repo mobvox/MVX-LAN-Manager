@@ -9,10 +9,14 @@ import lanmanager.lib.app_globals as app_globals
 import lanmanager.lib.helpers
 from lanmanager.config.routing import make_map
 
+from sqlalchemy import engine_from_config
+from lanmanager.model import init_model
+
 def load_environment(global_conf, app_conf):
     """Configure the Pylons environment via the ``pylons.config``
     object
     """
+
     config = PylonsConfig()
     
     # Pylons paths
@@ -45,4 +49,8 @@ def load_environment(global_conf, app_conf):
     # CONFIGURATION OPTIONS HERE (note: all config options will override
     # any Pylons config options)
     
+    # SQLAlchemy engine from config
+    engine = engine_from_config(config,  'sqlalchemy.')
+    # Calling init_model(engine) from models.__init__py
+    init_model(engine)
     return config

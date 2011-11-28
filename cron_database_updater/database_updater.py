@@ -35,21 +35,20 @@ class Server:
 import pymysql
 class Connection:
 	def __init__(self):
-		self._config_file = "db.json"
-		
+		import os
+		self._config_file = os.path.dirname(os.path.abspath(__file__)) + "/db.ini"
 		self._connect()
 	
 	def _connect(self):
 		""" it connect to the database configured in the config_file """
 		config = self.getConfig()
-		self._connection = pymysql.connect(host=config.get('_host'), port=config.get('_port'), user=config.get('_user'), passwd=config.get('_passwd'), db=config.get('_db'))
+		self._connection = pymysql.connect(host=config.get('database', 'host'), port=int(config.get('database', 'port')), user=config.get('database', 'user'), passwd=config.get('database', 'passwd'), db=config.get('database', 'db'))
 
 	def getConfig(self):
 		""" it access the config_file and retrieve the database config """
-		import json
-		f = open(self._config_file)
-		config = json.JSONDecoder().decode(f.read())
-		f.close()
+		import ConfigParser
+		config = ConfigParser.ConfigParser()
+		config.read(self._config_file)
 		return config
 
 	def getConnection(self):
