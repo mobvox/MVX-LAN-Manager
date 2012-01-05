@@ -11,6 +11,7 @@ log = logging.getLogger(__name__)
 
 class ListController(BaseController):
 
+	# main index
     def index(self):
        	machines_q = model.meta.Session.query(model.Machines)
     	c.machines = machines_q.all()
