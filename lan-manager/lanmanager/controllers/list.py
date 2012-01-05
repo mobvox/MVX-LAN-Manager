@@ -14,4 +14,5 @@ class ListController(BaseController):
     def index(self):
        	machines_q = model.meta.Session.query(model.Machines)
     	c.machines = machines_q.all()
+    	
         return render("/list.mako")
