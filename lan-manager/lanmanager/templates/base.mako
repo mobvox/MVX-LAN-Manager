@@ -5,12 +5,20 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="shortcut icon" href="/favicon.ico">
+		${h.javascript_link(url('/_static/js/jquery.min.js'))}
+		${h.javascript_link(url('/_static/js/tipsy/jquery.tipsy.js'))}
+		${h.javascript_link(url('/_static/js/jquery-ui-1.8.16.custom.min.js'))}
 		${h.javascript_link(url('/_static/js/base.js'))}
+		
+		${h.stylesheet_link(url('/_static/css/tipsy/tipsy.css'))}
+		${h.stylesheet_link(url('/_static/css/overcast/jquery-ui-1.8.16.custom.css'))}
 		${h.stylesheet_link(url('/_static/css/base.css'))}
 		
 		${self.head_tags()}
 	</head>
 	<body>
-		${self.body()}
+		<div id='content'>
+			${self.body()}
+		</div>
 	</body>
 </html>

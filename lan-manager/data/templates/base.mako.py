@@ -4,7 +4,7 @@ UNDEFINED = runtime.UNDEFINED
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 6
-_modified_time = 1322504178.479644
+_modified_time = 1326114710.437608
 _template_filename=u'/var/www/jonas/MVX-LAN-Manager/lan-manager/lanmanager/templates/base.mako'
 _template_uri=u'/base.mako'
 _template_cache=cache.Cache(__name__, _modified_time)
@@ -24,17 +24,32 @@ def render_body(context,**pageargs):
         # SOURCE LINE 2
         __M_writer(u'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"\r\n"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\r\n<html>\r\n\t<head>\r\n\t\t<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\r\n\t\t<link rel="shortcut icon" href="/favicon.ico">\r\n\t\t')
         # SOURCE LINE 8
-        __M_writer(escape(h.javascript_link(url('/_static/js/base.js'))))
+        __M_writer(escape(h.javascript_link(url('/_static/js/jquery.min.js'))))
         __M_writer(u'\r\n\t\t')
         # SOURCE LINE 9
+        __M_writer(escape(h.javascript_link(url('/_static/js/tipsy/jquery.tipsy.js'))))
+        __M_writer(u'\r\n\t\t')
+        # SOURCE LINE 10
+        __M_writer(escape(h.javascript_link(url('/_static/js/jquery-ui-1.8.16.custom.min.js'))))
+        __M_writer(u'\r\n\t\t')
+        # SOURCE LINE 11
+        __M_writer(escape(h.javascript_link(url('/_static/js/base.js'))))
+        __M_writer(u'\r\n\t\t\r\n\t\t')
+        # SOURCE LINE 13
+        __M_writer(escape(h.stylesheet_link(url('/_static/css/tipsy/tipsy.css'))))
+        __M_writer(u'\r\n\t\t')
+        # SOURCE LINE 14
+        __M_writer(escape(h.stylesheet_link(url('/_static/css/overcast/jquery-ui-1.8.16.custom.css'))))
+        __M_writer(u'\r\n\t\t')
+        # SOURCE LINE 15
         __M_writer(escape(h.stylesheet_link(url('/_static/css/base.css'))))
         __M_writer(u'\r\n\t\t\r\n\t\t')
-        # SOURCE LINE 11
+        # SOURCE LINE 17
         __M_writer(escape(self.head_tags()))
-        __M_writer(u'\r\n\t</head>\r\n\t<body>\r\n\t\t')
-        # SOURCE LINE 14
+        __M_writer(u"\r\n\t</head>\r\n\t<body>\r\n\t\t<div id='content'>\r\n\t\t\t")
+        # SOURCE LINE 21
         __M_writer(escape(self.body()))
-        __M_writer(u'\r\n\t</body>\r\n</html>')
+        __M_writer(u'\r\n\t\t</div>\r\n\t</body>\r\n</html>')
         return ''
     finally:
         context.caller_stack._pop_frame()

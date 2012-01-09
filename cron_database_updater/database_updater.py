@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# _*_ coding: utf-8 _*_
 import commands as cmd
 import nmap
 class Server:
@@ -93,10 +95,11 @@ if __name__ == '__main__':
 	for ip in ipList:
 		print "Running over %s" % ip
 		mac = s.getMACAddrByIP(ip)
+		mac = ('00:00:00:00:00:00', mac)[len(mac) > 0]
 		name = s.getNameByIP(ip)
-		name = ('NO_NAME', name)[len(name) > 0]
+		name = ('-', name)[len(name) > 0]
 		macList.append("'%s'," % mac)
-		a.update(s.getMACAddrByIP(ip), ip, name, s.getOpenPorts(str(ip)))
+		a.update(mac, ip, name, s.getOpenPorts(str(ip)))
 	macCriteria = ''.join(macList)
 	print "Cleanning..."
 	a.deleteIfNotIn(macCriteria[:len(macCriteria)-1])

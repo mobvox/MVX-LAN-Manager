@@ -1,0 +1,163 @@
+span, p {
+	font-family: Verdana;
+}
+ul {
+	padding: 0;
+	margin: 0;
+}
+li {
+	list-style-type: none;
+}
+body{
+	padding: 0;
+	margin: 0;
+}
+#content {
+	position: absolute;
+	width: 965px;
+	left: 50%;
+	margin-left: -482.5px;
+	background-color: #373737;
+}
+
+#content #leftbar {
+	width: 230px;
+	height: 100%;
+	float: left;
+}
+
+#content #leftbar #logo{
+	width: 210px;
+	height: 141px;
+	background: url('/_static/images/lanmanager.png');
+	margin: 0 auto;
+}
+#content #leftbar #menu {
+	margin-top: 6px;
+}
+#content #leftbar #menu ul li {
+	list-style-type: none;
+	height: 42px;
+	background: #cbd501;
+	line-height: 42px;
+	font-family: Verdana;
+	font-size: 18px;
+	color: #373737;
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
+}
+
+#content #leftbar #menu ul li a {
+	margin-left: 10px;
+	color: #373737;
+	text-decoration: none;
+}
+#content #leftbar #menu ul li div{
+	position: relative;
+	width: 57px;
+	height: 42px;
+	background: url('/_static/images/lanmanager.png') -236px -14px;
+	float: left;
+}
+
+#content #centercontent {
+	float: left;
+	width: 735px;
+}
+
+
+#content #centercontent #contenttable #table {
+	margin-top: 104px;
+	width: 734px;
+	border: 1px solid #FFFFFF;
+}
+
+#content #centercontent #contenttable #table #tableheader{
+	width: 100%;
+	height: 42px;
+	background-color: #797979;
+}
+#content #centercontent #contenttable #table #tableheader div{
+	float: left;
+	width: 177px;
+	text-align: center;
+	line-height: 42px;
+	border-right: 1px solid #9b9b9b;
+}
+#content #centercontent #contenttable #table #tableheader div.last {
+	border: none;
+}
+#content #centercontent #contenttable #table #tableheader div span{
+	font-size: 18px;
+	color: #FFFFFF;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr {
+	height: 66px;
+	clear: both;
+	font-size: 14px;
+	background-color: #f1f1f1;
+	border-top: 1px solid #FFFFFF;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr:hover {
+	background-color: #e6e6e6;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr div {
+	float: left;
+	width: 177px;
+	text-align: center;
+	line-height: 66px;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr div.multiline {
+	position: relative;
+	height: 66px;
+	line-height: 14px;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr div.multiline div {
+	position: absolute;
+	height: 26px;
+	top: 50%;
+	margin-top: -13px;
+	line-height: 14px;
+	left: 50%;
+	margin-left: -88px;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr div.multiline div span.mac {
+	font-size: 12px;
+	color: #656565;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr a {
+	display: block;
+	float: left;
+	margin-top: 24px;
+	width: 23px;
+	height: 23px;
+	margin-left: 15px;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr a#onoff {
+	background: url('/_static/images/lanmanager.png') -148px -171px;
+	margin-left: 42px;
+}
+#content #centercontent #contenttable #table #tablebody .tr a#ssh {
+	background: url('/_static/images/lanmanager.png') -201px -171px;
+}
+#content #centercontent #contenttable #table #tablebody .tr a#samba {
+	background: url('/_static/images/lanmanager.png') -258px -171px;
+}
+
+#content #centercontent #contenttable #table #tablebody .tr a.disabled {
+	opacity: .3;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+}
+
+#dialog{
+	display: none;
+}
