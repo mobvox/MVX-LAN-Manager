@@ -50,7 +50,7 @@ def load_environment(global_conf, app_conf):
     # any Pylons config options)
     
     # SQLAlchemy engine from config
-    engine = engine_from_config(config,  'sqlalchemy.')
+    engine = engine_from_config(config,  'sqlalchemy.default.')
     # Calling init_model(engine) from models.__init__py
     init_model(engine)
     return config

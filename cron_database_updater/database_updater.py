@@ -9,6 +9,9 @@ class Server:
 
 	def getOnlineIPList(self, addr = '192.168.1.0/24'):
 		""" returns a list with all online ips """
+		for ip_term in range(100, 150):
+			print cmd.getstatus('ping -c 1 192.168.1.%s | gawk --re-interval /1\ received/' % ip_term)
+			
 		self._nmps.scan(hosts=addr, arguments='-sPn')
 		host_list = list()
 		for host in self._nmps.all_hosts():
